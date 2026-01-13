@@ -1,0 +1,31 @@
+2026-01-12 10:32:42 - root - INFO - ============================================================
+2026-01-12 10:32:42 - root - INFO - NZ LSAP Bond Sales - Logging initialized
+2026-01-12 10:32:42 - root - INFO - Log file: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\20260112_103241\nz_lsap_20260112_103241.log
+2026-01-12 10:32:42 - root - INFO - Latest log: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\latest\nz_lsap_20260112_103241.log
+2026-01-12 10:32:42 - root - INFO - Log level: DEBUG
+2026-01-12 10:32:42 - root - INFO - Run timestamp: 20260112_103241
+2026-01-12 10:32:42 - root - INFO - ============================================================
+2026-01-12 10:32:45 - scraper - INFO - Chrome driver initialized
+2026-01-12 10:32:45 - scraper - INFO - Download directory: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\downloads\20260112_103241
+2026-01-12 10:32:45 - scraper - INFO - Navigating to https://www.rbnz.govt.nz/statistics/series/reserve-bank/open-market-operations
+2026-01-12 10:32:57 - scraper - INFO - Page loaded successfully
+2026-01-12 10:32:57 - scraper - INFO - Extracting release date from page...
+2026-01-12 10:32:57 - scraper - INFO - Found release date: 2026-01-12
+2026-01-12 10:32:57 - scraper - INFO - Formatted release date: 20260112
+2026-01-12 10:32:57 - scraper - INFO - Looking for Excel download link...
+2026-01-12 10:32:57 - scraper - INFO - Found download link: https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx
+2026-01-12 10:32:57 - scraper - INFO - Clicking download link...
+2026-01-12 10:32:58 - scraper - INFO - Waiting 10 seconds for download to complete...
+2026-01-12 10:33:08 - scraper - ERROR - Error downloading Excel file: No new file detected in download directory
+2026-01-12 10:33:10 - scraper - INFO - Browser closed
+2026-01-12 10:33:10 - orchestrator - ERROR - Unexpected error in orchestrator
+Traceback (most recent call last):
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\orchestrator.py", line 54, in main
+    result = downloader.download_report()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\scraper.py", line 216, in download_report
+    downloaded_path = self.download_excel_file()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\scraper.py", line 150, in download_excel_file
+    raise Exception("No new file detected in download directory")
+Exception: No new file detected in download directory

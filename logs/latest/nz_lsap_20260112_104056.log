@@ -1,0 +1,41 @@
+2026-01-12 10:40:57 - root - INFO - ============================================================
+2026-01-12 10:40:57 - root - INFO - NZ LSAP Bond Sales - Logging initialized
+2026-01-12 10:40:57 - root - INFO - Log file: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\20260112_104056\nz_lsap_20260112_104056.log
+2026-01-12 10:40:57 - root - INFO - Latest log: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\latest\nz_lsap_20260112_104056.log
+2026-01-12 10:40:57 - root - INFO - Log level: DEBUG
+2026-01-12 10:40:57 - root - INFO - Run timestamp: 20260112_104056
+2026-01-12 10:40:57 - root - INFO - ============================================================
+2026-01-12 10:40:57 - undetected_chromedriver.patcher - DEBUG - getting release number from /last-known-good-versions-with-downloads.json
+2026-01-12 10:40:57 - undetected_chromedriver.patcher - DEBUG - downloading from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-12 10:40:58 - undetected_chromedriver.patcher - DEBUG - unzipping C:\Users\MARKCA~1\AppData\Local\Temp\tmpb_0ouku7
+2026-01-12 10:40:58 - undetected_chromedriver.patcher - INFO - patching driver executable C:\Users\Mark Castro\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+2026-01-12 10:40:59 - undetected_chromedriver.patcher - DEBUG - found block:
+b'{window.cdc_adoQpoasnfa76pfcZLmcfl_Array = window.Array;window.cdc_adoQpoasnfa76pfcZLmcfl_Object = window.Object;window.cdc_adoQpoasnfa76pfcZLmcfl_Promise = window.Promise;window.cdc_adoQpoasnfa76pfcZLmcfl_Proxy = window.Proxy;window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol = window.Symbol;window.cdc_adoQpoasnfa76pfcZLmcfl_JSON = window.JSON;window.cdc_adoQpoasnfa76pfcZLmcfl_Window = window.Window;}'
+replacing with:
+b'{console.log("undetected chromedriver 1337!")}                                                                                                                                                                                                                                                                                                                                                             '
+2026-01-12 10:40:59 - undetected_chromedriver.patcher - DEBUG - patching took us 1.61 seconds
+2026-01-12 10:41:05 - scraper - INFO - Chrome driver initialized (stealth mode)
+2026-01-12 10:41:05 - scraper - INFO - Download directory: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\downloads\20260112_104056
+2026-01-12 10:41:05 - scraper - INFO - Navigating to https://www.rbnz.govt.nz/statistics/series/reserve-bank/open-market-operations
+2026-01-12 10:41:16 - scraper - INFO - Page loaded successfully
+2026-01-12 10:41:16 - scraper - INFO - Extracting release date from page...
+2026-01-12 10:41:16 - scraper - INFO - Found release date: 2026-01-12
+2026-01-12 10:41:16 - scraper - INFO - Formatted release date: 20260112
+2026-01-12 10:41:16 - scraper - INFO - Looking for Excel download link...
+2026-01-12 10:41:16 - scraper - INFO - Found download link: https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx
+2026-01-12 10:41:16 - scraper - INFO - Downloading file with session cookies...
+2026-01-12 10:41:17 - scraper - ERROR - Error downloading Excel file: 403 Client Error: Forbidden for url: https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx
+2026-01-12 10:41:18 - scraper - INFO - Browser closed
+2026-01-12 10:41:18 - orchestrator - ERROR - Unexpected error in orchestrator
+Traceback (most recent call last):
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\orchestrator.py", line 54, in main
+    result = downloader.download_report()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\scraper.py", line 232, in download_report
+    downloaded_path = self.download_excel_file()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\scraper.py", line 158, in download_excel_file
+    response.raise_for_status()
+  File "C:\Users\Mark Castro\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx

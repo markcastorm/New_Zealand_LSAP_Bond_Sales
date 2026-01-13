@@ -1,0 +1,16 @@
+# requirements.txt
+# Dependencies for NZ LSAP Bond Sales Data Collection
+
+# Web scraping with stealth mode
+selenium>=4.15.0
+undetected-chromedriver>=3.5.4
+
+# Excel file handling (optional, for future processing)
+openpyxl>=3.1.2
+pandas>=2.1.0
+
+# HTTP requests (optional, for direct downloads)
+requests>=2.31.0
+
+# Date/time handling (built-in, listed for reference)
+# datetime - built-in

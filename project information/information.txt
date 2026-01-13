@@ -1,0 +1,987 @@
+i believe its a new dawn new begining its a new run book  howp you have gon through the previous code see how good it its and its architecture 
+(C:\Users\Mark Castro\Documents\CHEF_NOVARTIS) now weare getting started on a new runnbook(D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\project information\Runbook - New Zealand_ LSAP Bond Sales.docx)
+we are gonna have a simila architecture (D:\Projects\SIMBA-RUNBOOKS\SNOWFALL_RUNBOOK\src\logger.py) incharge of generating logfiles for each run in the logfolder with timestamped subfolders for each run 
+we are gona have a download folder with time stamped subfolders for every run where downloaded file will go next we have the output folder with the timestamped subfolders for everyrun and latest subfolders always holding the latest file like my previous runbook analyze it keen ly
+now for the new runbooks lets start by creating the scrapper.py using selenium we are going to navigate to this site (https://www.rbnz.govt.nz/statistics/series/reserve-bank/open-market-operations)
+(! This data should be processed only via your AWS workspace.
+1.       Go to the link: https://www.rbnz.govt.nz/statistics/series/reserve-bank/open-market-operations
+2.       Download excel file ‘Open markets operations - D3 (1995-current)’
+3.       As result you will get ‘hd3.xlsx’ file.
+4.       Change file name to:
+hd3_YYYYMMDD.xlsx
+)
+
+when the site loads it looks like this (D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\project information\image 1.png) here is the sample html(D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\project information\sample site.txt)
+
+we are interested in 2 sections (<div class="component component--no-margin hero-component  hero--octonary col-12">
+            <div class="component-content">
+
+                    <section class="hero">
+                        <div class="hero__inner">
+                                    <!-- Breadcrumb - start -->
+        <!-- BEGIN NOINDEX -->
+<div class="row">
+<!--Start RBNZ / Breadcrumb.cshtml-->
+
+
+
+    <div class="component rbnz-breadcrumb component--no-margin navigation-title breadcrumb-component col-12 breadcrumb--is-collapsed">
+        <div class="component-content">
+
+
+                <nav aria-label="Breadcrumb" class="breadcrumb">
+
+                    <ol class="breadcrumb__list">
+                            <li class="breadcrumb__item home">
+                                        <a href="/" class="breadcrumb__link" aria-label="Home">
+
+                                            <svg class="breadcrumb__home-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+                                                <use xlink:href="/public/assets/icons/spritemap.svg#home"></use>
+
+                                            </svg>
+
+                                        </a>
+                            </li>
+                            <li class="breadcrumb__item ">
+                                        <a class="breadcrumb__link" href="/statistics">
+                                            Statistics
+                                        </a>
+                            </li>
+                            <li class="breadcrumb__item ">...</li>
+                            <li class="breadcrumb__item ">
+                                        <a class="breadcrumb__link" href="/statistics/series/reserve-bank">
+                                            Reserve Bank
+                                        </a>
+                            </li>
+                            <li class="breadcrumb__item last">
+                                        <a class="breadcrumb__link" href="/statistics/series/reserve-bank/open-market-operations">
+                                            Open market operations (D3)
+                                        </a>
+                            </li>
+                    </ol>
+                </nav>
+        </div>
+    </div>
+<!--End RBNZ / Breadcrumb.cshtml-->
+
+<!--Start RBNZ / Breadcrumb.cshtml-->
+
+
+
+    <div class="component rbnz-breadcrumb component--no-margin  navigation-title breadcrumb-alt-component">
+        <div class="component-content">
+
+
+                <a class="breadcrumb-alt" href="/statistics/series/reserve-bank">
+
+                    <svg class="breadcrumb-alt__icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+                        <use xlink:href="/public/assets/icons/spritemap.svg#chevron"></use>
+
+                    </svg>
+Reserve Bank                </a>
+        </div>
+    </div>
+<!--End RBNZ / Breadcrumb.cshtml-->
+</div>        <!-- END NOINDEX -->
+        <!-- Breadcrumb - end -->
+
+
+                                <h1 class="hero__heading hero__heading--h2">
+        Open market operations (D3)
+    </h1>
+
+                            <div class="hero__content-wrapper">
+                                        <p class="hero__description">
+            This data shows results of the Reserve Bank's open market operations which operate on a discretionary basis.
+        </p>
+
+                                
+                                <div class="hero__metadata">
+                                    
+                                                    <div class="hero__metadata-item">
+                    <div class="hero__metadata-title">Released:</div>
+                    <div class="hero__metadata-detail">
+                        <time datetime="2026-01-12">12 January 2026</time>
+                    </div>
+
+                </div>
+                <div class="hero__metadata-item">
+                    <div class="hero__metadata-title">Next Release:</div>
+                    <div class="hero__metadata-detail">
+                        <time datetime="2026-01-13">13 January 2026</time>
+                    </div>
+                </div>
+                <div class="hero__metadata-item">
+                    <div class="hero__metadata-title">Periodicity:</div>
+                    <div class="hero__metadata-detail">Daily</div>
+                </div>
+            <div class="hero__metadata-item">
+                <div class="hero__metadata-title">Source:</div>
+                <div class="hero__metadata-detail">Reserve Bank of New Zealand</div>
+            </div>
+
+                                            <div class="social-share js-social-share"><div class="hero__metadata-item social-share__container"><dl><dt class="hero__metadata-title social-share__metadata-title">Share this page:</dt><dd class="hero__metadata-detail social-share__metadata-detail"><button aria-label="twitter" class="react-share__ShareButton social-share__button" style="background-color: transparent; border: none; padding: 0px; font: inherit; color: inherit; cursor: pointer;"><span class="social-share__button-icon-wrap" title="X"><svg viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:://www.w3.org/1999/xlink" focusable="false" aria-hidden="true" class="social-share__button-icon"><use href="/public/assets/icons/spritemap.svg#x-icon"></use></svg></span></button></dd><dd class="hero__metadata-detail social-share__metadata-detail"><button aria-label="linkedin" class="react-share__ShareButton social-share__button" style="background-color: transparent; border: none; padding: 0px; font: inherit; color: inherit; cursor: pointer;"><span class="social-share__button-icon-wrap" title="LinkedIn"><svg viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:://www.w3.org/1999/xlink" focusable="false" aria-hidden="true" class="social-share__button-icon"><use href="/public/assets/icons/spritemap.svg#linkedin-icon"></use></svg></span></button></dd><dd class="hero__metadata-detail social-share__metadata-detail"><button aria-label="facebook" class="react-share__ShareButton social-share__button" style="background-color: transparent; border: none; padding: 0px; font: inherit; color: inherit; cursor: pointer;"><span class="social-share__button-icon-wrap" title="Facebook"><svg viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:://www.w3.org/1999/xlink" focusable="false" aria-hidden="true" class="social-share__button-icon"><use href="/public/assets/icons/spritemap.svg#facebook-icon"></use></svg></span></button></dd><dd class="hero__metadata-detail social-share__metadata-detail"><button aria-label="email" class="react-share__ShareButton social-share__button" style="background-color: transparent; border: none; padding: 0px; font: inherit; color: inherit; cursor: pointer;"><span class="social-share__button-icon-wrap" title="Email"><svg viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:://www.w3.org/1999/xlink" focusable="false" aria-hidden="true" class="social-share__button-icon"><use href="/public/assets/icons/spritemap.svg#envelope"></use></svg></span></button></dd><dd class="hero__metadata-detail social-share__metadata-detail"><button class="social-share__button"><span class="social-share__button-icon-wrap" title="Copy Link"><svg viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http:://www.w3.org/1999/xlink" focusable="false" aria-hidden="true" class="social-share__button-icon"><use href="/public/assets/icons/spritemap.svg#link"></use></svg></span></button></dd></dl></div></div>
+
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </section>
+
+                
+
+            </div>
+        </div>) and this (<div id="article-content">
+<div class="row"><!--START RBNZ Mini Downloads Card Container -->
+            <div class="component download-card-component component--rebase  col-12 col-12">
+                <div class="component-content">
+                    <section class="component__section">
+                        
+            <div class="component__pretext">
+                
+
+                
+
+                    <h2>
+Data files    </h2>
+
+
+                
+
+                
+
+                
+            </div>
+
+
+
+
+
+
+
+                        <div class="component__body">
+                            <a name="b239RF8MsU6sxB4lTzBcg"></a>
+
+                                <div class="component download-card-component download-card col-12 download-card--mini download-card--condensed download-card--xlsx">
+        <div class="component-content">
+            <a name="xpLGinsFeUGlTQ3BAQFscw"></a>
+            <a class="download-card__link js-ga4-tracking" href="/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx" data-ga4-event="file_download" data-ga4-component-type="card" data-ga4-component-name="mini download" data-ga4-interaction-type="click" data-ga4-interaction-detail="XLSX | 1MB" data-ga4-interaction-value="Open markets operations - D3 (1995-current)" data-ga4-interaction-url="/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx">
+                <div class="download-card__icon-wrapper"></div>
+                <div class="download-card__content-container">
+                    <svg class="download-card__file-type-icon" width="36" height="38" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use xlink:href="/public/assets/icons/spritemap.svg#xlsx"></use>
+                    </svg>
+                    <div class="download-card__content">
+                        <p class="download-card__heading">Open markets operations - D3 (1995-current)</p>
+                            <span class="download-card__file-type-text"> XLSX | 1MB</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+<!--END RBNZ Mini Downloads Card Container -->
+
+    <div class="component component rich-text component--constraint-width col-12 col-12 rich-text--constraint-width rich-text--full-width">
+        <div class="component-content">
+            <div class="table-wrapper" role="region" tabindex="0" aria-label="content table">
+                <a name="PyTGVZVYqUWCwx9vcXJSPg"></a>
+<h4>Open Market Operations</h4>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th>OMO held</th>
+<th>Transaction type</th>
+<th>Amount offered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12 Jan 2026</td>
+<td>-</td>
+<td>No OMO</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th>Maturity date</th>
+<th>Eligible Securities</th>
+<th>Volume bid ($m)</th>
+<th>Amount allocated ($m)</th>
+<th>Min Rate (% p.a.)</th>
+<th>Range of bids received (% p.a.)</th>
+<th>Range of successful bids (% p.a.)</th>
+<th>Weighted average successful bids (% p.a.)</th>
+<th>Unsuccessful range (% p.a.)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4>Sale of New Zealand Government Securities</h4>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th>Description</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sale date</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Settlement date</td>
+<td>-</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td></td>
+</tr>
+<tr>
+<td>NZGBs sold</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Amount sold ($m)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Yield (% p.a.)</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4>RB Bills</h4>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th>Description</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OMO date</td>
+<td>09 Jan 2026</td>
+</tr>
+<tr>
+<td>Settlement date</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Total amount</td>
+<td>No Tender Held</td>
+</tr>
+<tr>
+<td>RB Bills offered</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Days to maturity</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Amount offered</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Results:</td>
+<td></td>
+</tr>
+<tr>
+<td>Total bids submitted ($m)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Total no. of bids submitted</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Total successful bids ($m)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Total no. of successful bids</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Successful range (% p.a.)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Weighted average successful yield (% p.a.)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Unsuccessful range (% p.a.)</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4>Government Bond Repurchases</h4>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th>Government bond</th>
+<th>Total to date (m)</th>
+</tr><tr>
+</tr></thead>
+<tbody>
+<tr>
+<td>15 May 2026</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th>Transaction date</th>
+<th>Settlement date</th>
+<th>Bond repurchased</th>
+<th>Face value ($m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>09 Jan 2026</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4>Bond Market Liquidity Support</h4>
+<br>
+<table class="table--data">
+<thead>
+<tr>
+<th scope="col">Transaction date: 09 Jan 2026</th>
+<th scope="col">NZ Government Bonds</th>
+<th scope="col">Local Government Funding Agency Bonds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td scope="row">Total Transactions ($m)</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td scope="row">Total Holdings (Face Value, $m)</td>
+<td>20</td>
+<td>70</td>
+</tr>
+</tbody>
+</table>            </div>
+            
+<br>
+
+        </div>
+    </div>
+
+    <div class="component component--rebase component-accordion js-ga-tracking col-12">
+        <div class="component-content">
+            <section class="component__section">
+                
+
+
+
+
+
+
+
+                <div class="component__body">
+
+
+
+                                                                            <div class="accordion__container">
+                                        <div class="accordion  js-is-special-note">
+                                            <h3 class="heading--h5">
+                                                <button type="button" aria-controls="accordion-content-1-5" class="accordion__button js-accordion-trigger" aria-expanded="false" id="accordion-title-1-5">
+                                                    <svg class="accordion__button-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+                                                        <use xlink:href="/public/assets/icons/spritemap.svg#chevron-right"></use>
+                                                    </svg>
+                                                    <a name="KzdVqBvwIkGCymL7Sqc8w"></a>
+                                                    Special note
+                                                </button>
+                                            </h3>
+                                            <div id="accordion-content-1-5" role="region" aria-labelledby="accordion-title-1-5" class="accordion__content">
+                                                <div class="component rich-text rich-text--full-width component--no-margin col-12">
+                                                    <div class="component-content">
+                                                        <h4>Term Auction Facility (TAF) and Corporate Open Market Operation (COMO) to be removed</h4>
+<p><strong>10 March 2021</strong></p>
+<p>On 10 March 2021, the Bank announced the suspension of the Term Auction Facility (TAF) and Corporate Open Market Operation (COMO). The last auction was held on 16 March 2021. Further details are available in a&nbsp;<a href="https://www.rbnz.govt.nz/hub/news/2021/03/some-temporary-liquidity-facilities-to-be-removed">media release</a>.</p>
+<hr>
+<p><a href="/statistics/series/reserve-bank/open-market-operations/special-note">View all Open market operations Special notes</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion__container">
+                                        <div class="accordion ">
+                                            <h3 class="heading--h5">
+                                                <button type="button" aria-controls="accordion-content-2-5" class="accordion__button js-accordion-trigger" aria-expanded="false" id="accordion-title-2-5">
+                                                    <svg class="accordion__button-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+                                                        <use xlink:href="/public/assets/icons/spritemap.svg#chevron-right"></use>
+                                                    </svg>
+                                                    <a name="Fp8V1HA8USyCi9VslKC5w"></a>
+                                                    Background notes
+                                                </button>
+                                            </h3>
+                                            <div id="accordion-content-2-5" role="region" aria-labelledby="accordion-title-2-5" class="accordion__content">
+                                                <div class="component rich-text rich-text--full-width component--no-margin col-12">
+                                                    <div class="component-content">
+                                                        <h2>Background notes</h2>
+<h3>The data: coverage, periodicity and timeliness</h3>
+<h4>Coverage characteristics</h4>
+<p>Data volumes are shown in millions of New Zealand dollars and interest rates are New Zealand interest rates.</p>
+<p>The following data is recorded and detailed further in the series description:</p>
+<ul>
+    <li>date held</li>
+    <li>transaction type</li>
+    <li>maturity date</li>
+    <li>eligible securities</li>
+    <li>total volume offered</li>
+    <li>volume offered per maturity</li>
+    <li>volume bid</li>
+    <li>total amount transacted</li>
+    <li>range of bids received</li>
+    <li>range of successful bids</li>
+    <li>weighted average successful bids</li>
+    <li>settlement date</li>
+    <li>total number of bids submitted</li>
+    <li>total number of successful bids</li>
+    <li>government bond</li>
+    <li>Local Government Funding Agency bond</li>
+    <li>total holdings.</li>
+</ul>
+<p>The Open Market Operation (OMO) is used to manage the level of liquidity in New Zealand’s financial system. These operations are announced daily via electronic media. The announcement indicates whether we will inject or withdraw funds (using reverse repurchase transactions or repurchase transactions). Operations are conducted as tenders and registered bidders telephone their bids to us.</p>
+<p>In March 2020, we introduced a number of new facilities, which include the Large Scale Asset Purchase programme (LSAP), Corporate Open Market Operation (COMO) and reintroduced the Term Auction Facility (TAF). The LSAP is held on Monday, Wednesday, Thursday and Friday. The COMO and TAF run each Tuesday in the domestic market operations.</p>
+<p>Before 11 December 2007, eligible securities were limited to government bonds, Treasury bills and Reserve Bank bills (RBB). We stopped issuing RBB in 1999, but reintroduced them in November 2008 (see below).</p>
+<p>Beginning on 11 December 2007, we have accepted Kauri bonds for use in our domestic market operations. We expanded the range of acceptable securities in June 2008. </p>
+<p>Refer to&nbsp;<a href="/financial-markets/domestic-markets/operational-information/repo-eligible-securities-and-haircuts">Eligible securities and haircuts</a>&nbsp;for a full list of eligible securities.</p>
+<p>Beginning in November 2008, in conjunction with the reintroduction of RBB, we introduced a Term Auction Facility (TAF). RBB tenders are held weekly on Monday and Wednesday afternoons, as required, and are used to withdraw liquidity from the banking system. The TAF operates in a similar manner to the OMO and is used to inject liquidity into the banking system. The TAF was discontinued in November 2009.</p>
+<p>Historical data is available beginning 1 November 1995.</p>
+<h4>Periodicity</h4>
+<p>Daily.</p>
+<h4>Timeliness</h4>
+<p>We publish the results of the OMOs on the day they are held. We release RBB tender results the day after the tender. We also release results via electronic media.</p>
+<h3>Access by the public</h3>
+<h4>Statistics release calendar</h4>
+<p>The statistics release calendar&nbsp;provides a long-term plan of scheduled releases. We update and release it on the first working day of the month.</p>
+<p><a href="/statistics/statistics-release-calendar">View the&nbsp;statistics release calendar</a></p>
+<h3>Integrity</h3>
+<h4>Dissemination of terms and conditions under which official statistics are produced, including confidentiality of individual responses</h4>
+<p>Although there is no law that requires us to compile and publish historical data on OMOs, we disseminate the data as a service to the public.</p>
+<h4>Provision of information about revisions and advance notice of major changes in methodology</h4>
+<p>The data are final and are not subject to revision. Any changes to the processes of conducting the OMOs are announced via electronic media. </p>
+<p>Read the procedures in Section 3 of the&nbsp;<a href="/financial-markets/domestic-markets/operational-information/operating-rules-and-guidelines-for-domestic-markets">Operating Rules and Guidelines for the Domestic Markets</a></p>
+<h3>Quality</h3>
+<h4>Dissemination of documentation on methodology and sources used in preparing statistics</h4>
+<p>For additional explanatory information, see the following Bulletin article.</p>
+<p><a href="https://www.rbnz.govt.nz/hub/publications/bulletin/2008/rbb2008-71-04-05">Liquidity and the New Zealand financial system</a></p>
+<h4>Dissemination of statistics that support statistical cross-checks and provide assurance of reasonableness</h4>
+<p>Not applicable.</p>
+<h3>Additional notes</h3>
+<p>In October 1994, we introduced repurchase agreements into our open market operations. On 9 October 1995, we stopped using secured loans in our open market operations.</p>
+<h3>Electronic media</h3>
+<p>Includes Refinitiv and Bloomberg.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion__container">
+                                        <div class="accordion ">
+                                            <h3 class="heading--h5">
+                                                <button type="button" aria-controls="accordion-content-3-5" class="accordion__button js-accordion-trigger" aria-expanded="false" id="accordion-title-3-5">
+                                                    <svg class="accordion__button-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+                                                        <use xlink:href="/public/assets/icons/spritemap.svg#chevron-right"></use>
+                                                    </svg>
+                                                    <a name="rEmgzTmQUmM2oWdQWU32A"></a>
+                                                    Series description
+                                                </button>
+                                            </h3>
+                                            <div id="accordion-content-3-5" role="region" aria-labelledby="accordion-title-3-5" class="accordion__content">
+                                                <div class="component rich-text rich-text--full-width component--no-margin col-12">
+                                                    <div class="component-content">
+                                                        <h3>Security types</h3>
+<p>Most securities reported are wholesale market instruments: New Zealand government bonds, Local Government Funding Agency bonds, Treasury bills, corporate bonds, Reserve Bank bills, commercial paper and registered certificates of deposit (RCDs).</p>
+<h4>Interest bearing securities</h4>
+<p>These are written agreements, whether marketable or not, in which one party promises to pay a stated sum on demand, or on a specified date, to the legal holder of the document. They may also involve a promise to pay stated interest at specified intervals over the term of the bond. Alternatively, they may be issued and traded at discount from their nominal value.</p>
+<p>These include: government bonds, Treasury bills, Reserve Bank bills, bills of exchange, commercial paper (including eurocommercial paper), certificates of deposit, debentures, convertible notes, and medium term notes issued by private placement.</p>
+<h3>Types of government securities currently on issue are:</h3>
+<p><strong>Government bonds</strong>&nbsp;are denominated in New Zealand dollars, issued for terms greater than one year, and have a fixed interest coupon paid semi-annually in arrears.</p>
+<p><strong>Inflation-indexed bonds (IIB)</strong>&nbsp;are denominated in New Zealand dollars with a fixed coupon paid quarterly in arrears. On maturity, the principal and the indexed component of the bonds are redeemable. The index component refers to the incremental CPI adjustment.</p>
+<p><strong>Treasury bills</strong>&nbsp;are denominated in New Zealand dollars, sold at a discount to the nominal value and carry no coupon. The bills are redeemable at par on maturity. Treasury bill tenders are generally held by NZDMO on a weekly basis. Three maturities of regular Treasury bills are offered in each tender with roughly 3, 6 and 12-month maturities.</p>
+<h3>Other types of securities currently on issue are:</h3>
+<h4><em>Reserve</em><em><strong> </strong></em><em>Bank</em><em><strong> </strong></em><em>bills</em></h4>
+<p>Reserve Bank bills are denominated in New Zealand dollars, sold at a discount to par and carry no coupon. The bills can be discounted back to us when they are within 28 days of maturity. The bills are redeemable at par on maturity. We stopped issuing bills in February 1999, but reintroduced these in November 2008.</p>
+<h4><em>Commercial paper</em></h4>
+<p>Refers to private sector (including financial corporations), short-term (usually less than one year) discounted debt instruments.</p>
+<h4><em>Corporate bonds</em></h4>
+<p>Refers to New Zealand dollar denominated debt instruments, recorded on a New Zealand register, that are issued by private sector entities (including financial corporations). Issuers can be both New Zealand residents (domestic) and non-residents (Kauris).</p>
+<h4><em>Domestic corporate bonds</em></h4>
+<p>Refers to issues of New Zealand dollar denominated debt recorded on a New Zealand register by New Zealand incorporated entities.</p>
+<h4><em>Non-domestic corporate bonds</em></h4>
+<p>Refers to issues of New Zealand dollar denominated debt issued by a non-resident incorporated entity and recorded on a New Zealand register. Such issues are sometimes referred to as Kauri bonds.</p>
+<h4><em>Registered certificates of deposits (RCDs)</em></h4>
+<p>Refers to issues of discounted, short-term (less than one year) debt securities, the majority of which are issued by banks. RCDs have largely taken the place of individual bank bills.</p>
+<h4><em>Repurchases and reverse repurchases</em></h4>
+<p>Arrangements under which one party sells a security at a specified price to another party with an agreement that the security will be repurchased at a fixed price on a specified future date. The party that sells the security upon entering the arrangement is said to be ‘repurchasing’ the security. The party that buys the security upon entering the arrangement is said to be ‘reverse repurchasing’ the security.</p>
+<h4><em>Asset-backed securities</em></h4>
+<p>Refers to issues of New Zealand dollar denominated assets that may include but are not restricted to receivables (invoices, credit cards), commercial mortgage backed securities, hire-purchase agreements and equipment purchases.</p>
+<h3>Descriptions of tenders</h3>
+<h4><em>Open market operations</em></h4>
+<p>The Open Market Operation (OMO) is used to manage the level of liquidity in New Zealand’s financial system. We announce these operations daily via electronic media. The announcement indicates whether we will inject or withdraw funds (using reverse repurchase transactions or repurchase transactions). We conduct operations as tenders, and registered bidders telephone their bids to us.</p>
+<p>Prior to 11 December 2007, eligible securities were limited to government bonds, Treasury bills and Reserve Bank bills (RBB). (See Description for definition of terms.) We discontinued issuing RBB in 1999, but reintroduced them in November 2008.</p>
+<p>Beginning on 11 December 2007, we have accepted Kauri bonds for use in our domestic market operations. We further expanded the range of acceptable securities in June 2008. Refer to the&nbsp;<a href="/financial-markets/domestic-markets/operational-information/repo-eligible-securities-and-haircuts">Eligible securities and haircuts</a>&nbsp;page for a full list of eligible securities.</p>
+<h4><em>Term Auction facility</em></h4>
+<p>Beginning in November 2008, in conjunction with the reintroduction of RBB, we introduced a Term Auction Facility (TAF). The TAF operates in a similar manner to the OMO and is used to inject liquidity into the banking system. The TAF was discontinued in November 2009 and reintroduced in March 2020. TAF auctions are held weekly on a Tuesday morning at 9:30am and are used to inject liquidity into the banking system.</p>
+<h4><em>Reserve Bank bill tender</em></h4>
+<p>We issue short-term discount securities. We ceased issuing RBB on 5 February 1999. All RBB and related advances to the Treasury were repaid by 9 April 1999. Reserve Bank bills were reintroduced in November 2008 to assist in managing the liquidity of the banking system. RBB tenders are held weekly, on Monday and Wednesday afternoons, to withdraw liquidity from the banking system.</p>
+<h4><em>Large Scale Asset Purchase programme</em></h4>
+<p>In March 2020, we introduced the Large Scale Asset Purchase programme to inject money into the banking system with the aim of lowering borrowing costs to households and businesses through buying NZ government bonds, Local Government Funding Agency bonds and NZ government inflation-indexed bonds in the secondary market. The LSAP is held every Monday, Wednesday, Thursday and Friday at 11am.</p>
+<h4><em>Corporate Open Market Operation</em></h4>
+<p>In March 2020, we introduced the Corporate Open Market Operation to support market functioning. The COMO is held weekly on a Tuesday morning at 11am where just corporate and asset-backed eligible securities will be acceptable as collateral on a two-name basis.</p>
+<h3>Tender related terminology</h3>
+<h4><em>Total volume / amount offered</em></h4>
+<p>The total nominal amount being offered in the tender.</p>
+<h4><em>Volume offered per maturity</em></h4>
+<p>More than one maturity date can be offered in an operation. We will set a volume limit for each maturity offered. We may accept bids for one or all of the maturity dates, but the total amount we accept will normally not be more than the total volume offered.</p>
+<h4><em>Volume bid / Total bids submitted</em></h4>
+<p>The total amount bid for the particular maturity date by all bidders.</p>
+<h4><em>Total amount transacted / Total successful bids</em></h4>
+<p>The total amount we accept for the particular maturity date.</p>
+<h4><em>Range of bids received</em></h4>
+<p>The range of bids we receive, including successful and unsuccessful bids.</p>
+<h4><em>Range of successful bids</em></h4>
+<p>The range of successful bids, from the minimum to the maximum rate.</p>
+<h4><em>Weighted average successful bids</em></h4>
+<p>Weighted average interest rates, weighted by volume per rate.</p>
+<h4><em>Date held</em></h4>
+<p>Refers to the date when we held the tender. This is not the settlement date where cash is exchanged for the security, except for our Open Market Operations where settlement occurs on the day of the tender.</p>
+<h4><em>Range of yields on unsuccessful bids</em></h4>
+<p>The range of unsuccessful bids, from the lowest rate we accept to the highest bid we receive. The lowest rate of the unsuccessful bids can be the same as the highest rate of the successful bids if successful bids have been pro-rated at the highest successful rate.</p>
+<h4><em>Weighted average yield of unsuccessful bids</em></h4>
+<p>Weighted average interest rates, weighted by volume per rate.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion__container">
+                                        <div class="accordion ">
+                                            <h3 class="heading--h5">
+                                                <button type="button" aria-controls="accordion-content-4-5" class="accordion__button js-accordion-trigger" aria-expanded="false" id="accordion-title-4-5">
+                                                    <svg class="accordion__button-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+                                                        <use xlink:href="/public/assets/icons/spritemap.svg#chevron-right"></use>
+                                                    </svg>
+                                                    <a name="J4xqW61jUKTnELWQ87duQ"></a>
+                                                    Legend
+                                                </button>
+                                            </h3>
+                                            <div id="accordion-content-4-5" role="region" aria-labelledby="accordion-title-4-5" class="accordion__content">
+                                                <div class="component rich-text rich-text--full-width component--no-margin col-12">
+                                                    <div class="component-content">
+                                                        <h3>Symbols and conventions for summary table</h3>
+<div class="table-wrapper">
+<table class="table--data">
+    <thead>
+        <tr>
+            <th>Symbol or convention</th>
+            <th>Definition</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>0</td>
+            <td style="text-align: left;">Zero or value rounded to zero</td>
+        </tr>
+        <tr>
+            <td>-</td>
+            <td style="text-align: left;">Not applicable</td>
+        </tr>
+        <tr>
+            <td>..</td>
+            <td style="text-align: left;">Not available</td>
+        </tr>
+        <tr>
+            <td><strong>bold</strong></td>
+            <td style="text-align: left;">Revised/new</td>
+        </tr>
+        <tr>
+            <td><em>italics</em></td>
+            <td style="text-align: left;">Provisional</td>
+        </tr>
+        <tr>
+            <td class="table__cell--highlighted">Light grey background</td>
+            <td style="text-align: left;">Historical</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<h3>General notes</h3>
+<ul>
+    <li>Individual figures may not sum to the totals due to rounding</li>
+    <li>Percentage changes are calculated on unrounded numbers</li>
+    <li>You are free to copy, distribute and adapt these statistics subject to the conditions listed on our <a href="/about-our-site/terms-of-use">copyright page</a>.</li>
+</ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+<!--START CardContainer-->
+
+
+        <div class="component component--rebase section-cards-component col-12 component--taupe section-cards--is-carousel" data-ga4-component-name="">
+            <div class="component-content">
+
+                    <section class="component__section">
+                        <a name="JpVFdrLgzUOR51Af9JHw3A"></a>
+
+                        
+            <div class="component__pretext-small">
+                <div class="component__pretext-small-container">
+                    
+
+                    
+
+                        <h2 class="heading--h4 ">
+Related statistics    </h2>
+
+
+                            <div class="paragraph--default">
+            View more Financial statistics about our balance sheet, bank notes, coin mintings and more
+        </div>
+
+
+                    
+                </div>
+
+                <a href="/statistics/series/reserve-bank" class="button js-ga4-tracking button--secondary" data-ga4-component-type="button" data-ga4-component-name="button" data-ga4-interaction-type="click" data-ga4-interaction-detail="Related statistics" data-ga4-interaction-value="View series" data-ga4-interaction-url="/statistics/series/reserve-bank">        <span class="button__text">
+            View series
+        </span>
+        <svg class="button__icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+            <use xlink:href="/public/assets/icons/spritemap.svg#arrow-right-short"></use>
+        </svg>
+</a>
+
+            </div>
+
+
+
+
+
+
+
+
+                        <div class="section-cards__grid-container" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                            <div class="section-cards__grid-inner">
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/open-market-operations" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 1" data-ga4-interaction-value="Open market operations (D3)" data-ga4-interaction-url="/statistics/series/reserve-bank/open-market-operations">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Open market operations (D3)</h3>
+
+
+                <p class="card__description">This data shows results of the Reserve Bank's open market operations which operate on a discretionary basis.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/influences-on-settlement-cash" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 2" data-ga4-interaction-value="Influences on settlement cash (D10)" data-ga4-interaction-url="/statistics/series/reserve-bank/influences-on-settlement-cash">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Influences on settlement cash (D10)</h3>
+
+
+                <p class="card__description">This data summarises the Government's and the Reserve Bank's cash flows and outstanding balances on a monthly basis.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/standing-facilities" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 3" data-ga4-interaction-value="Standing facilities (D12)" data-ga4-interaction-url="/statistics/series/reserve-bank/standing-facilities">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Standing facilities (D12)</h3>
+
+
+                <p class="card__description">This data shows the settlement cash level and use of the Reserve Bank's standing facilities on a daily basis.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/bank-notes-in-the-hands-of-the-public" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 4" data-ga4-interaction-value="Bank notes in the hands of the public (F3)" data-ga4-interaction-url="/statistics/series/reserve-bank/bank-notes-in-the-hands-of-the-public">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Bank notes in the hands of the public (F3)</h3>
+
+
+                <p class="card__description">This data tracks all bank notes held outside our vaults, summarised by year and by denomination.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/coin-mintings" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 5" data-ga4-interaction-value="Coin mintings (F4)" data-ga4-interaction-url="/statistics/series/reserve-bank/coin-mintings">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Coin mintings (F4)</h3>
+
+
+                <p class="card__description">This data relates to the number of coins we have minted each year. More specifically, it shows the value of coins of each denominations ordered each year. Note that coins may not always bear the year they were ordered, and that not all coins are put in circulation.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/our-foreign-currency-assets-and-liabilities" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 6" data-ga4-interaction-value="Our foreign currency assets and liabilities (F5)" data-ga4-interaction-url="/statistics/series/reserve-bank/our-foreign-currency-assets-and-liabilities">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Our foreign currency assets and liabilities (F5)</h3>
+
+
+                <p class="card__description">This data shows the Reserve Bank's foreign currency assets and liabilities in more detail.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/our-balance-sheet" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 7" data-ga4-interaction-value="Our balance sheet (R1)" data-ga4-interaction-url="/statistics/series/reserve-bank/our-balance-sheet">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Our balance sheet (R1)</h3>
+
+
+                <p class="card__description">This is the Reserve Bank's balance sheet – a summary of the assets and liabilities we hold to fulfil our functions.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/our-statistical-balance-sheet" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 8" data-ga4-interaction-value="Our statistical balance sheet (R2)" data-ga4-interaction-url="/statistics/series/reserve-bank/our-statistical-balance-sheet">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Our statistical balance sheet (R2)</h3>
+
+
+                <p class="card__description">This is the Reserve Bank's balance sheet – a summary of the assets and liabilities we hold to fulfil our functions – presented by instrument and currency.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+<!--START Card-->
+
+
+    <div class="component card-component component--no-margin   col-12" data-ga4-component-name="clickable card with carousel">
+        <div class="component-content">
+
+
+<a href="/statistics/series/reserve-bank/our-analytical-accounts" class="js-ga4-tracking card component-card " data-ga4-component-type="card carousel" data-ga4-interaction-type="click" data-ga4-interaction-detail="position: 9" data-ga4-interaction-value="Our analytical accounts (R3)" data-ga4-interaction-url="/statistics/series/reserve-bank/our-analytical-accounts">        <div class="card__content">
+
+
+            <div class="card__content-inner">
+                <h3 class="heading--h5 card__heading">Our analytical accounts (R3)</h3>
+
+
+                <p class="card__description">This is the Reserve Bank's balance sheet – a summary of the assets and liabilities we hold to fulfil our functions – classified by broad institutional sector of counterparties.</p>
+
+            </div>
+        </div>
+</a>        </div>
+    </div>
+<!--END Card-->
+
+
+                            </div>
+                        <div class="carousel__controls">
+    <button class="carousel__button carousel__button--prev js-prev-button" type="button" aria-label="carousel prev button" disabled="">
+        
+    <div class="carousel__button-under">
+      <svg class="carousel__button-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+        <use xlink:href="/public/assets/icons/spritemap.svg#arrow-long"></use>
+      </svg>
+    </div>
+    <svg class="carousel__button-icon carousel__button-icon--top" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+      <use xlink:href="/public/assets/icons/spritemap.svg#arrow-long"></use>
+    </svg>
+  
+    </button>
+    <button class="carousel__button carousel__button--next js-next-button" type="button" aria-label="carousel next button">
+        
+    <div class="carousel__button-under">
+      <svg class="carousel__button-icon" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+        <use xlink:href="/public/assets/icons/spritemap.svg#arrow-long"></use>
+      </svg>
+    </div>
+    <svg class="carousel__button-icon carousel__button-icon--top" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+      <use xlink:href="/public/assets/icons/spritemap.svg#arrow-long"></use>
+    </svg>
+  
+    </button></div></div>
+                    </section>
+
+            </div>
+        </div>
+<!--END CardContainer-->
+
+
+</div>                </div>) this one states when it was released (<div class="hero__metadata-item">
+                    <div class="hero__metadata-title">Released:</div>
+                    <div class="hero__metadata-detail">
+                        <time datetime="2026-01-12">12 January 2026</time>
+                    </div>
+
+                </div>) and this one states the next relese date (<div class="hero__metadata-item">
+                    <div class="hero__metadata-title">Next Release:</div>
+                    <div class="hero__metadata-detail">
+                        <time datetime="2026-01-13">13 January 2026</time>
+                    </div>
+                </div>)  you need to understand that  finaly we are supposed to triger a download by clicking this link (<div class="component download-card-component download-card col-12 download-card--mini download-card--condensed download-card--xlsx">
+        <div class="component-content">
+            <a name="xpLGinsFeUGlTQ3BAQFscw"></a>
+            <a class="download-card__link js-ga4-tracking" href="/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx" data-ga4-event="file_download" data-ga4-component-type="card" data-ga4-component-name="mini download" data-ga4-interaction-type="click" data-ga4-interaction-detail="XLSX | 1MB" data-ga4-interaction-value="Open markets operations - D3 (1995-current)" data-ga4-interaction-url="/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx">
+                <div class="download-card__icon-wrapper"></div>
+                <div class="download-card__content-container">
+                    <svg class="download-card__file-type-icon" width="36" height="38" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use xlink:href="/public/assets/icons/spritemap.svg#xlsx"></use>
+                    </svg>
+                    <div class="download-card__content">
+                        <p class="download-card__heading">Open markets operations - D3 (1995-current)</p>
+                            <span class="download-card__file-type-text"> XLSX | 1MB</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>)    this will trigger the download to go in the download folder created and  and timestamped subfolders  the file will then be renamed and save t=in the output folder as the runbook instructs (hd3_YYYYMMDD.xlsx
+ 
+Where YYYYMMDD is the release date.
+)

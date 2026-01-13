@@ -1,0 +1,71 @@
+2026-01-12 10:45:23 - root - INFO - ============================================================
+2026-01-12 10:45:23 - root - INFO - NZ LSAP Bond Sales - Logging initialized
+2026-01-12 10:45:23 - root - INFO - Log file: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\20260112_104518\nz_lsap_20260112_104518.log
+2026-01-12 10:45:23 - root - INFO - Latest log: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\latest\nz_lsap_20260112_104518.log
+2026-01-12 10:45:23 - root - INFO - Log level: DEBUG
+2026-01-12 10:45:23 - root - INFO - Run timestamp: 20260112_104518
+2026-01-12 10:45:23 - root - INFO - ============================================================
+2026-01-12 10:45:23 - undetected_chromedriver.patcher - DEBUG - getting release number from /last-known-good-versions-with-downloads.json
+2026-01-12 10:45:23 - undetected_chromedriver.patcher - DEBUG - downloading from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-12 10:45:24 - undetected_chromedriver.patcher - DEBUG - unzipping C:\Users\MARKCA~1\AppData\Local\Temp\tmpxvc8fo5o
+2026-01-12 10:45:25 - undetected_chromedriver.patcher - INFO - patching driver executable C:\Users\Mark Castro\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+2026-01-12 10:45:29 - undetected_chromedriver.patcher - DEBUG - found block:
+b'{window.cdc_adoQpoasnfa76pfcZLmcfl_Array = window.Array;window.cdc_adoQpoasnfa76pfcZLmcfl_Object = window.Object;window.cdc_adoQpoasnfa76pfcZLmcfl_Promise = window.Promise;window.cdc_adoQpoasnfa76pfcZLmcfl_Proxy = window.Proxy;window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol = window.Symbol;window.cdc_adoQpoasnfa76pfcZLmcfl_JSON = window.JSON;window.cdc_adoQpoasnfa76pfcZLmcfl_Window = window.Window;}'
+replacing with:
+b'{console.log("undetected chromedriver 1337!")}                                                                                                                                                                                                                                                                                                                                                             '
+2026-01-12 10:45:29 - undetected_chromedriver.patcher - DEBUG - patching took us 3.63 seconds
+2026-01-12 10:45:35 - scraper - INFO - Chrome driver initialized (stealth mode)
+2026-01-12 10:45:35 - scraper - INFO - Download directory: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\downloads\20260112_104518
+2026-01-12 10:45:35 - scraper - INFO - Navigating to https://www.rbnz.govt.nz/statistics/series/reserve-bank/open-market-operations
+2026-01-12 10:45:56 - scraper - INFO - Browser closed
+2026-01-12 10:45:56 - orchestrator - ERROR - Unexpected error in orchestrator
+Traceback (most recent call last):
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\orchestrator.py", line 54, in main
+    result = downloader.download_report()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\scraper.py", line 233, in download_report
+    self.navigate_to_page()
+  File "D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\src\scraper.py", line 68, in navigate_to_page
+    self.driver.get(config.BASE_URL)
+  File "C:\Users\Mark Castro\AppData\Local\Programs\Python\Python311\Lib\site-packages\undetected_chromedriver\__init__.py", line 665, in get
+    return super().get(url)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Mark Castro\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\Mark Castro\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Mark Castro\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 17.302
+  (Session info: chrome=143.0.7499.170)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0xdd1213
+	0xdd1254
+	0xbbe6dd
+	0xbaed49
+	0xbaea85
+	0xbac94f
+	0xbad456
+	0xbba09b
+	0xbcbe5e
+	0xbd1976
+	0xbadad2
+	0xbcbbd5
+	0xbcb94e
+	0xc4de45
+	0xc2b2e6
+	0xbfd321
+	0xbfe1d4
+	0x1025254
+	0x102080b
+	0x103d0ea
+	0xdeb118
+	0xdf311d
+	0xdd9518
+	0xdd96d9
+	0xdc3a68
+	0x76ab6839
+	0x77ca906f
+	0x77ca903d
+

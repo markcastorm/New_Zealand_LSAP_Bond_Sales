@@ -1,0 +1,37 @@
+2026-01-12 10:49:29 - root - INFO - ============================================================
+2026-01-12 10:49:29 - root - INFO - NZ LSAP Bond Sales - Logging initialized
+2026-01-12 10:49:29 - root - INFO - Log file: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\20260112_104928\nz_lsap_20260112_104928.log
+2026-01-12 10:49:29 - root - INFO - Latest log: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\logs\latest\nz_lsap_20260112_104928.log
+2026-01-12 10:49:29 - root - INFO - Log level: DEBUG
+2026-01-12 10:49:29 - root - INFO - Run timestamp: 20260112_104928
+2026-01-12 10:49:29 - root - INFO - ============================================================
+2026-01-12 10:49:29 - undetected_chromedriver.patcher - DEBUG - getting release number from /last-known-good-versions-with-downloads.json
+2026-01-12 10:49:30 - undetected_chromedriver.patcher - DEBUG - downloading from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-12 10:49:30 - undetected_chromedriver.patcher - DEBUG - unzipping C:\Users\MARKCA~1\AppData\Local\Temp\tmpqldli328
+2026-01-12 10:49:30 - undetected_chromedriver.patcher - INFO - patching driver executable C:\Users\Mark Castro\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe
+2026-01-12 10:49:32 - undetected_chromedriver.patcher - DEBUG - found block:
+b'{window.cdc_adoQpoasnfa76pfcZLmcfl_Array = window.Array;window.cdc_adoQpoasnfa76pfcZLmcfl_Object = window.Object;window.cdc_adoQpoasnfa76pfcZLmcfl_Promise = window.Promise;window.cdc_adoQpoasnfa76pfcZLmcfl_Proxy = window.Proxy;window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol = window.Symbol;window.cdc_adoQpoasnfa76pfcZLmcfl_JSON = window.JSON;window.cdc_adoQpoasnfa76pfcZLmcfl_Window = window.Window;}'
+replacing with:
+b'{console.log("undetected chromedriver 1337!")}                                                                                                                                                                                                                                                                                                                                                             '
+2026-01-12 10:49:32 - undetected_chromedriver.patcher - DEBUG - patching took us 1.58 seconds
+2026-01-12 10:49:37 - scraper - INFO - Chrome driver initialized (stealth mode)
+2026-01-12 10:49:37 - scraper - INFO - Download directory: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\downloads\20260112_104928
+2026-01-12 10:49:37 - scraper - INFO - Navigating to https://www.rbnz.govt.nz/statistics/series/reserve-bank/open-market-operations
+2026-01-12 10:49:47 - scraper - INFO - Page loaded successfully
+2026-01-12 10:49:47 - scraper - INFO - Extracting release date from page...
+2026-01-12 10:49:47 - scraper - INFO - Found release date: 2026-01-12
+2026-01-12 10:49:47 - scraper - INFO - Formatted release date: 20260112
+2026-01-12 10:49:47 - scraper - INFO - Looking for Excel download link...
+2026-01-12 10:49:47 - scraper - INFO - Found download link: https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/d-f-r/d3/hd3.xlsx
+2026-01-12 10:49:47 - scraper - INFO - Clicking download link...
+2026-01-12 10:49:50 - scraper - INFO - Waiting for download to complete (timeout: 60s)...
+2026-01-12 10:49:51 - scraper - DEBUG - Download in progress... (Unconfirmed 723610.crdownload)
+2026-01-12 10:49:52 - scraper - INFO - Download complete: 1,384,089 bytes
+2026-01-12 10:49:52 - scraper - INFO - Downloaded file: hd3.xlsx
+2026-01-12 10:49:52 - scraper - INFO - File size: 1,384,089 bytes (1351.65 KB)
+2026-01-12 10:49:53 - scraper - INFO - Copied to timestamped output: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\output\20260112_104928\hd3_20260112.xlsx
+2026-01-12 10:49:53 - scraper - INFO - Copied to latest output: D:\Projects\SIMBA-RUNBOOKS\New_Zealand_LSAP_Bond_Sales\output\latest\hd3_20260112.xlsx
+2026-01-12 10:49:53 - scraper - INFO - Download and processing complete
+2026-01-12 10:49:53 - scraper - INFO - Browser closed
+2026-01-12 10:49:53 - orchestrator - INFO - Successfully downloaded and processed file
+2026-01-12 10:49:53 - orchestrator - INFO - Orchestrator completed successfully
