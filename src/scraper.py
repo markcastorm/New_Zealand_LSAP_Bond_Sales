@@ -121,6 +121,11 @@ class RBNZDownloader:
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument('--window-size=1920,1080')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--no-first-run')
+        chrome_options.add_argument('--disable-background-networking')
+        chrome_options.page_load_strategy = 'eager'  # Return once DOM is ready, don't wait for all resources
 
         # Use undetected_chromedriver (stealth mode) with detected version
         self.driver = uc.Chrome(options=chrome_options, version_main=chrome_version)
@@ -134,10 +139,19 @@ class RBNZDownloader:
 
         self.logger.info(f"Navigating to {config.BASE_URL}")
 
-        self.driver.get(config.BASE_URL)
-        time.sleep(config.PAGE_LOAD_DELAY)
+        last_error = None
+        for attempt in range(1, config.NAVIGATE_MAX_RETRIES + 1):
+            try:
+                self.driver.get(config.BASE_URL)
+                time.sleep(config.PAGE_LOAD_DELAY)
+                self.logger.info("Page loaded successfully")
+                return
+            except TimeoutException as e:
+                last_error = e
+                self.logger.warning(f"Navigation attempt {attempt}/{config.NAVIGATE_MAX_RETRIES} timed out, retrying...")
+                time.sleep(2)
 
-        self.logger.info("Page loaded successfully")
+        raise TimeoutException(f"Page failed to load after {config.NAVIGATE_MAX_RETRIES} attempts: {last_error}")
 
     def extract_release_date(self):
         """

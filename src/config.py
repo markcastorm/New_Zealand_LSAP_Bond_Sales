@@ -61,9 +61,10 @@ OUTPUT_FILENAME_PATTERN = 'hd3_{date}.xlsx'
 
 HEADLESS_MODE = False  # Set to True for production
 DEBUG_MODE = True
-WAIT_TIMEOUT = 20  # Seconds
-PAGE_LOAD_DELAY = 3  # Seconds
+WAIT_TIMEOUT = 60  # Seconds
+PAGE_LOAD_DELAY = 5  # Seconds
 DOWNLOAD_WAIT_TIME = 10  # Seconds to wait for download to complete
+NAVIGATE_MAX_RETRIES = 3  # Retries for page navigation
 
 # =============================================================================
 # OUTPUT CONFIGURATION
